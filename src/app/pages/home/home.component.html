@@ -1,0 +1,79 @@
+<div class="home-wrapper">
+    <div class="feed-container">
+        <h2>✨ Mi Red Social</h2>
+
+        <div class="post-form">
+            <!-- Header del acordeón principal -->
+            <div class="post-form-header" [class.expanded]="isPostFormExpanded" (click)="togglePostForm()">
+                <span>📝 Crear nuevo post</span>
+                <span class="accordion-icon">▼</span>
+            </div>
+
+            <!-- Contenido del acordeón principal -->
+            <div class="post-form-content" [class.expanded]="isPostFormExpanded">
+                <textarea [(ngModel)]="newPost.contenido" placeholder="¿Qué estás pensando? Comparte algo increíble...">
+        </textarea>
+
+                <!-- Sección de imágenes (sub-acordeón) -->
+                <div class="image-section">
+                    <div class="image-section-header" [class.expanded]="isImageSectionExpanded"
+                        (click)="toggleImageSection()">
+                        <span>🖼️ Agregar imagen</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+
+                    <div class="image-section-content" [class.expanded]="isImageSectionExpanded">
+                        <div class="mock-imagenes">
+                            <img *ngFor="let img of mockImagenes" [src]="img" (click)="selectImage(img)"
+                                [class.selected]="newPost.imagenUrl === img" class="miniatura" />
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn" (click)="publicarPost()">
+                    🚀 Publicar Post
+                </button>
+            </div>
+        </div>
+
+        <!-- Posts -->
+        <div class="post-card" *ngFor="let post of posts">
+            <div class="post-author">
+                👤 {{ post.autor.nombre }}
+            </div>
+            <div class="post-content">{{ post.contenido }}</div>
+
+            <!-- Imagen clickeable -->
+            <div class="post-image-container" *ngIf="post.imagenUrl">
+                <img [src]="post.imagenUrl" alt="imagen del post" class="post-image"
+                    (click)="abrirModal(post.imagenUrl, imgDialog)" />
+            </div>
+
+            <!-- Footer con fecha y stats -->
+            <div class="post-footer">
+                <div class="post-stats">
+                    <!-- Botón de Like con ícono condicional -->
+                    <button class="icon-btn" (click)="darLike(post)">
+                        <span [ngClass]="post.usuarioHaDadoLike ? 'heart-liked' : 'heart-unliked'">
+                            {{ post.usuarioHaDadoLike ? '❤️' : '🤍' }}
+                        </span>
+                        {{ post.cantidadLikes }}
+                    </button>
+
+                    <!-- Botón de Comentarios -->
+                    <button class="icon-btn" (click)="abrirComentarios(post)">
+                        💬 {{ post.cantidadComentarios }}
+                    </button>
+                </div>
+                <div>📅 {{ post.fechaIngreso | date:'short' }}</div>
+            </div>
+        </div>
+
+        <!-- Modal global único para previsualización -->
+        <dialog #imgDialog class="image-dialog">
+            <img [src]="imagenSeleccionada" alt="Previsualización" class="modal-image" />
+            <form method="dialog">
+                <button class="close-btn">✕ Cerrar</button>
+            </form>
+        </dialog>
+    </div>

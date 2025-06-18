@@ -1,0 +1,64 @@
+<div class="auth-wrapper">
+    <div class="container" [class.active]="isRegisterActive">
+  <div class="form-box login">
+    <form (ngSubmit)="onLogin()">
+      <h1>Acceso</h1>
+      <div class="input-box">
+        <input type="text" placeholder="Nombre de usuario" [(ngModel)]="loginData.username" name="username" required />
+        <i class="bx bxs-user"></i>
+      </div>
+      <div class="input-box">
+        <input type="password" placeholder="Contraseña" [(ngModel)]="loginData.password" name="password" required />
+        <i class="bx bxs-lock-alt"></i>
+      </div>
+      <div class="forgot-link">
+        <a href="#">¿Has olvidado la contraseña?</a>
+      </div>
+      <button type="submit" class="btn">Acceso</button>
+    
+    </form>
+  </div>
+
+  <div class="form-box register">
+    <form (ngSubmit)="onRegister()">
+      <h1>Registro</h1>
+      <div class="input-box">
+        <input type="text" placeholder="Usuario" [(ngModel)]="registerData.username" name="regUsername" required />
+        <i class="bx bxs-user"></i>
+      </div>
+      <div class="input-box">
+        <input type="text" placeholder="Nombres" [(ngModel)]="registerData.name" name="regNombres" required />
+        <i class="bx bxs-user"></i>
+      </div>
+      <div class="input-box">
+        <input type="text" placeholder="Apellidos" [(ngModel)]="registerData.lastname" name="regApellidos" required />
+        <i class="bx bxs-user"></i>
+      </div>
+      <div class="input-box">
+        <input type="email" placeholder="Correo electrónico" [(ngModel)]="registerData.email" name="regEmail" required />
+        <i class="bx bxs-envelope"></i>
+      </div>
+      <div class="input-box">
+        <input type="password" placeholder="Contraseña" [(ngModel)]="registerData.password" name="regPassword" required />
+        <i class="bx bxs-lock-alt"></i>
+      </div>
+      <button type="submit" class="btn">Registro</button>
+      
+    </form>
+  </div>
+
+  <div class="toggle-box">
+    <div class="toggle-panel toggle-left">
+      <h1>¡Hola, Bienvenido!</h1>
+      <p>¿No tienes una cuenta?</p>
+      <button class="btn register-btn" (click)="isRegisterActive = true">Registro</button>
+    </div>
+
+    <div class="toggle-panel toggle-right">
+      <h1>¡Bienvenido de Nuevo!</h1>
+      <p>¿Ya tienes una cuenta?</p>
+      <button class="btn login-btn" (click)="isRegisterActive = false">Login</button>
+    </div>
+  </div>
+</div>
+</div>
