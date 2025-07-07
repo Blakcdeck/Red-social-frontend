@@ -71,7 +71,14 @@ export class HomeComponent {
     this.http.get<any>(`http://localhost:8080/red-social/api/posts/feed/${this.currentUserId}`).subscribe(
       data => this.posts = data.content,
       error => console.error('Error al obtener posts', error)
+
+      
     );
+
+    this.posts.forEach(post => {
+      post.mostrarComentarios = false;
+    });
+
   }
 
   publicarPost() {
@@ -80,7 +87,7 @@ export class HomeComponent {
       return;
     }
 
-    this.http.post('http://localhost:8080/red-social/api/posts', this.newPost).subscribe(
+    this.http.post('http://localhost:8090/red-social/api/posts', this.newPost).subscribe(
       () => {
         // Limpiar el formulario
         this.newPost.contenido = '';
@@ -119,6 +126,7 @@ export class HomeComponent {
   }
 
   abrirComentarios(post: any): void {
+    post.mostrarComentarios = !post.mostrarComentarios;
     // Abrir modal o redirigir
     console.log('Abrir comentarios para el post', post.id);
   }
@@ -126,4 +134,19 @@ export class HomeComponent {
     this.imagenSeleccionada = url;
     dialog.showModal();
   }
+
+  agregarComentario(post: any) {
+      if (!post.nuevoComentario?.trim()) return;
+
+        const nuevo = {
+          autor: 'Tú', // Puedes cambiarlo por el usuario logueado
+          texto: post.nuevoComentario.trim()
+        };
+
+        post.comentarios = post.comentarios || [];
+        post.comentarios.push(nuevo);
+        post.nuevoComentario = '';
+        post.cantidadComentarios = post.comentarios.length;
+  }
+
 }

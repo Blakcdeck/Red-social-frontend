@@ -1,3 +1,4 @@
+
 <div class="home-wrapper">
     <div class="left-column">
     </div>
@@ -69,7 +70,46 @@
                 </div>
                 <div>📅 {{ post.fechaIngreso | date:'short' }}</div>
             </div>
-        </div>
+            <!-- Sección de Comentarios -->
+                <div class="comentarios-container" *ngIf="post.mostrarComentarios">
+                
+                <div class="comentarios-lista">
+                    <div *ngFor="let comentario of post.comentarios" class="comentario">
+                    <div class="comentario-avatar">
+                        <img src="../../assets/img/avatar-masculino.png" alt="Avatar" class="avatar">
+                    </div>
+                    <div class="comentario-contenido">
+                        <div class="comentario-cabecera">
+                        <span class="comentario-autor">{{ comentario.autor }}</span>
+                        <span class="comentario-fecha">hace 2h</span>
+                        </div>
+                        <p class="comentario-texto">{{ comentario.texto }}</p>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Formulario para nuevo comentario -->
+                <div class="nuevo-comentario">
+                    <div class="nuevo-comentario-avatar">
+                    <img src="assets/user-avatar.png" alt="Tu avatar" class="avatar">
+                    </div>
+                    <div class="nuevo-comentario-form">
+                    <textarea 
+                        [(ngModel)]="post.nuevoComentario" 
+                        placeholder="Escribe un comentario..." 
+                        class="comentario-input"
+                        rows="2"></textarea>
+                    <button 
+                        (click)="agregarComentario(post)" 
+                        class="comentario-boton"
+                        [disabled]="!post.nuevoComentario">
+                        <i class="fas fa-paper-plane"></i> Enviar
+                    </button>
+                    </div>
+                </div>
+                </div>
+
+                </div>
 
         <!-- Modal global único para previsualización -->
         <dialog #imgDialog class="image-dialog">
