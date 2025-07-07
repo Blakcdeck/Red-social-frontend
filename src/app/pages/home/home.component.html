@@ -11,7 +11,7 @@
 
             <!-- Contenido del acordeón principal -->
             <div class="post-form-content" [class.expanded]="isPostFormExpanded">
-                <textarea [(ngModel)]="newPost.contenido" placeholder="¿Qué estás pensando? Comparte algo increíble...">
+                <textarea  ngSkipHydration [(ngModel)]="newPost.contenido" placeholder="¿Qué estás pensando? Comparte algo increíble...">
         </textarea>
 
                 <!-- Sección de imágenes (sub-acordeón) -->

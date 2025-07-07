@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
@@ -12,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class HomeComponent {
   imagenSeleccionada: string | null = null;
-
+  currentUserId:number|null=null;
   // Variables para controlar los acordeones
   isPostFormExpanded: boolean = false;
   isImageSectionExpanded: boolean = false;
@@ -28,14 +29,17 @@ export class HomeComponent {
   newPost = {
     contenido: '',
     imagenUrl: '',
-    autorId: 1
+    autorId: 0,
   };
-
-  constructor(private http: HttpClient) { }
-
+  
+  constructor(private http: HttpClient,private authService:AuthService) { }
+  
   ngOnInit(): void {
+    this.currentUserId=this.authService.getCurrentUserId();
+    this.newPost.autorId=this.currentUserId ?? 0;
     this.obtenerPosts();
   }
+
 
   // Métodos para controlar acordeones
   togglePostForm(): void {
@@ -62,7 +66,7 @@ export class HomeComponent {
   }
 
   obtenerPosts() {
-    this.http.get<any>(`http://localhost:8080/red-social/api/posts/feed/${this.newPost.autorId}`).subscribe(
+    this.http.get<any>(`http://localhost:8080/red-social/api/posts/feed/${this.currentUserId}`).subscribe(
       data => this.posts = data.content,
       error => console.error('Error al obtener posts', error)
     );
@@ -105,7 +109,7 @@ export class HomeComponent {
     }
   }
   darLike(post: any): void {
-    this.http.post(`http://localhost:8080/red-social/api/likes/post/${post.id}/usuario/1`, null).subscribe(() => {
+    this.http.post(`http://localhost:8080/red-social/api/likes/post/${post.id}/usuario/${this.currentUserId}`, null).subscribe(() => {
       console.log('like al post', post.id);
       this.obtenerPosts();
     });
