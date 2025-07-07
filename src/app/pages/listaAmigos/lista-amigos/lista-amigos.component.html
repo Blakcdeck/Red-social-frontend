@@ -1,0 +1,73 @@
+<!-- lista-amigos.component.html -->
+<div class="amigos-sidebar">
+  <div class="amigos-header">
+    <h3>Mis Amigos</h3>
+    <div class="solicitudes-badge" *ngIf="solicitudesPendientes.length > 0">
+      <button (click)="toggleSolicitudes()" class="solicitudes-btn">
+        <i class="fas fa-bell"></i>
+        {{ solicitudesPendientes.length }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Solicitudes Pendientes -->
+  <div class="solicitudes-container" *ngIf="mostrarSolicitudes && solicitudesPendientes.length > 0">
+    <div class="solicitudes-header">
+      <h4>Solicitudes Pendientes</h4>
+      <button (click)="toggleSolicitudes()" class="close-btn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="solicitud-item" *ngFor="let solicitud of solicitudesPendientes">
+      <div class="solicitud-info">
+        <div class="avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="info">
+          <p class="nombre">{{ solicitud.solicitante.nombre }}</p>
+          <p class="email">{{ solicitud.solicitante.email }}</p>
+        </div>
+      </div>
+      <div class="solicitud-acciones">
+        <button (click)="aceptarSolicitud(solicitud.id)" class="btn-aceptar">
+          <i class="fas fa-check"></i>
+        </button>
+        <button (click)="rechazarSolicitud(solicitud.id)" class="btn-rechazar">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista de Amigos -->
+  <div class="amigos-lista" *ngIf="!cargando">
+    <div class="amigo-item" *ngFor="let amistad of amigos">
+      <div class="amigo-info">
+        <div class="avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="info">
+          <p class="nombre">{{ getNombreAmigo(amistad) }}</p>
+          <p class="email">{{ getEmailAmigo(amistad) }}</p>
+        </div>
+      </div>
+      <div class="amigo-acciones">
+        <button (click)="eliminarAmistad(amistad.id)" class="btn-eliminar" title="Eliminar amistad">
+          <i class="fas fa-user-times"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="cargando">
+    <div class="spinner"></div>
+    <p>Cargando amigos...</p>
+  </div>
+
+  <div class="no-amigos" *ngIf="!cargando && amigos.length === 0">
+    <i class="fas fa-user-friends"></i>
+    <p>Aún no tienes amigos</p>
+    <p>¡Busca usuarios para agregar!</p>
+  </div>
+</div>

@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BuscaUsuariosComponent } from "../buscarUsuarios/busca-usuarios/busca-usuarios.component";
+import { ListaAmigosComponent } from "../listaAmigos/lista-amigos/lista-amigos.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, BuscaUsuariosComponent, ListaAmigosComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

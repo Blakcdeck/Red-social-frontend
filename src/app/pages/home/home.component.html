@@ -1,4 +1,6 @@
 <div class="home-wrapper">
+    <div class="left-column">
+    </div>
     <div class="feed-container">
         <h2>✨ Mi Red Social</h2>
 
@@ -11,8 +13,8 @@
 
             <!-- Contenido del acordeón principal -->
             <div class="post-form-content" [class.expanded]="isPostFormExpanded">
-                <textarea  ngSkipHydration [(ngModel)]="newPost.contenido" placeholder="¿Qué estás pensando? Comparte algo increíble...">
-        </textarea>
+                <textarea ngSkipHydration [(ngModel)]="newPost.contenido"
+                    placeholder="¿Qué estás pensando? Comparte algo increíble..."></textarea>
 
                 <!-- Sección de imágenes (sub-acordeón) -->
                 <div class="image-section">
@@ -76,4 +78,13 @@
                 <button class="close-btn">✕ Cerrar</button>
             </form>
         </dialog>
+    </div>
+    <div class="side-panel">
+        <div class="side-box busca-usuarios-box">
+            <app-busca-usuarios></app-busca-usuarios>
+        </div>
+
+        <div class="side-box lista-amigos-box">
+            <app-lista-amigos></app-lista-amigos>
+        </div>
     </div>

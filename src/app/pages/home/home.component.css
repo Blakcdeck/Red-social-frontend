@@ -20,17 +20,28 @@
     display: block;
 }
 
+/* === LAYOUT PRINCIPAL: 3 COLUMNAS CON GRID === */
 .home-wrapper {
     padding: 40px 16px;
     background: linear-gradient(135deg, #ff4e8b, #6a5af9);
     min-height: 100vh;
-    display: flex;
+
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr; /* izquierda | centro (más ancho) | derecha */
+    gap: 24px;
     justify-content: center;
+    align-items: start;
 }
 
+/* Columna izquierda vacía, por si quieres usar después */
+.left-column {
+    /* vacío por ahora */
+}
+
+/* CENTRO - FEED DE POSTS */
 .feed-container {
     width: 100%;
-    max-width: 700px;
+    max-width: 900px; /* Aumenté un poco para que sea más ancho */
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     border-radius: 24px;
@@ -39,6 +50,7 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* Tu h2 y demás estilos intactos */
 .feed-container h2 {
     margin-bottom: 32px;
     font-size: 28px;
@@ -51,7 +63,7 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Accordion Styles */
+/* Accordion y post-form */
 .post-form {
     background: rgba(255, 255, 255, 0.8);
     border-radius: 16px;
@@ -253,12 +265,10 @@
     animation: shimmer 1.5s ease-in-out infinite;
 }
 
-
 @keyframes shimmer {
     0% {
         transform: translateX(-100%) translateY(-100%) rotate(45deg);
     }
-
     100% {
         transform: translateX(100%) translateY(100%) rotate(45deg);
     }
@@ -297,7 +307,6 @@
     transition: all 0.4s ease;
     border-radius: 16px;
 }
-
 
 /* Botones de íconos (like, comentario) */
 .icon-btn {
@@ -370,7 +379,6 @@
     background: white;
     box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
     text-align: center;
-    
 }
 
 .image-dialog::backdrop {
@@ -406,37 +414,74 @@
     background: linear-gradient(135deg, #5a6fd8, #6a3e91);
 }
 
+/* SIDEBAR DERECHO */
+.side-panel {
+    width: 30vw; /* 25% del ancho ventana */
+    max-width: 360px; /* máximo 360px */
+    min-width: 280px; /* mínimo 280px */
+    max-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-left: auto; /* se pega a la derecha */
+}
+
+.side-box {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-break: break-word;
+}
+
+.busca-usuarios-box {
+    flex: 1 1 auto;
+    max-height: 50%;
+}
+
+.lista-amigos-box {
+    flex: 1 1 auto;
+    max-height: 50%;
+}
+
+/* Scroll visible si hay overflow */
+.side-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.side-box::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 8px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .home-wrapper {
-        padding: 20px 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .feed-container {
-        padding: 24px 16px;
+        max-width: 100%;
+        margin-bottom: 24px;
+        margin-left: 0;
     }
 
-    .post-form-content.expanded {
-        padding: 16px;
+    .side-panel {
+        width: 100%;
+        margin-left: 0;
+        max-height: unset;
     }
 
-    .mock-imagenes {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 8px;
-        padding: 12px;
-    }
-
-    .miniatura {
-        height: 80px;
-    }
-
-    /* Modal responsive */
-    .image-dialog {
-        width: 95vw;
-        max-width: 95vw;
-    }
-
-    .image-dialog img {
-        height: 300px;
+    .side-box {
+        max-height: unset;
     }
 }

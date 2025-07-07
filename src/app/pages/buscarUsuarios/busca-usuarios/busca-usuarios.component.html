@@ -1,0 +1,55 @@
+<!-- buscar-usuarios.component.html -->
+<div class="buscar-usuarios-container">
+  <div class="buscar-header">
+    <h2>Buscar Usuarios</h2>
+    <div class="search-box">
+      <input 
+        type="text" 
+        [(ngModel)]="terminoBusqueda" 
+        placeholder="Buscar por nombre o email..."
+        (keyup.enter)="buscarUsuarios()"
+        class="search-input"
+      >
+      <button (click)="buscarUsuarios()" class="search-btn">
+        <i class="fas fa-search"></i>
+      </button>
+      <button (click)="limpiarBusqueda()" class="clear-btn" *ngIf="terminoBusqueda">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="usuarios-lista" *ngIf="!cargando">
+    <div class="usuario-card" *ngFor="let usuario of usuariosBuscados">
+      <div class="usuario-info">
+        <div class="usuario-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="usuario-datos">
+          <h3>{{ usuario.nombre }}</h3>
+          <p>{{ usuario.email }}</p>
+        </div>
+      </div>
+      <div class="usuario-acciones">
+        <button 
+          (click)="enviarSolicitudAmistad(usuario.id)" 
+          class="btn-amistad"
+          title="Enviar solicitud de amistad"
+        >
+          <i class="fas fa-user-plus"></i>
+          Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="cargando">
+    <div class="spinner"></div>
+    <p>Cargando usuarios...</p>
+  </div>
+
+  <div class="no-results" *ngIf="!cargando && usuariosBuscados.length === 0">
+    <i class="fas fa-search"></i>
+    <p>No se encontraron usuarios</p>
+  </div>
+</div>
