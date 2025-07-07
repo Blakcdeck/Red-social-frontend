@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 
 export interface Amistad {
   id: number;
-  solicitante: any; // Usuario que envía la solicitud
-  receptor: any; // Usuario que recibe la solicitud
+  usuarioSolicitante: any; // Usuario que envía la solicitud
+  usuarioReceptor: any; // Usuario que recibe la solicitud
   estado: 'PENDIENTE' | 'ACEPTADA' | 'RECHAZADA';
   fechaCreacion: Date;
 }

@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -8,11 +9,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PerfilUsuarioComponent implements OnInit {
   usuario: any = {};
-
-  constructor(private http: HttpClient) { }
+  currentUserId: number | null = null;
+  constructor(private http: HttpClient,private authService:AuthService) { }
 
   ngOnInit() {
-  this.http.get<any>('http://localhost:8090/red-social/api/usuarios/31')
+    
+  this.currentUserId=this.authService.getCurrentUserId();
+  this.http.get<any>(`http://localhost:8080/red-social/api/usuarios/${this.currentUserId}`)
   .subscribe({
     next: (data) => {
       this.usuario.nombreUsuario = data.username ?? 'Invitado';

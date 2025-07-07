@@ -15,7 +15,7 @@ import { ListaAmigosComponent } from "../listaAmigos/lista-amigos/lista-amigos.c
 })
 export class HomeComponent {
   imagenSeleccionada: string | null = null;
-  currentUserId:number|null=null;
+  currentUserId: number | null = null;
   // Variables para controlar los acordeones
   isPostFormExpanded: boolean = false;
   isImageSectionExpanded: boolean = false;
@@ -33,12 +33,12 @@ export class HomeComponent {
     imagenUrl: '',
     autorId: 0,
   };
-  
-  constructor(private http: HttpClient,private authService:AuthService) { }
-  
+
+  constructor(private http: HttpClient, private authService: AuthService) { }
+
   ngOnInit(): void {
-    this.currentUserId=this.authService.getCurrentUserId();
-    this.newPost.autorId=this.currentUserId ?? 0;
+    this.currentUserId = this.authService.getCurrentUserId();
+    this.newPost.autorId = this.currentUserId ?? 0;
     this.obtenerPosts();
   }
 
@@ -69,15 +69,15 @@ export class HomeComponent {
 
   obtenerPosts() {
     this.http.get<any>(`http://localhost:8080/red-social/api/posts/feed/${this.currentUserId}`).subscribe(
-      data => this.posts = data.content,
+      data => {
+        this.posts = data.content.map((post: any) => ({
+          ...post,
+          mostrarComentarios: false,
+          nuevoComentario: ''
+        }));
+      },
       error => console.error('Error al obtener posts', error)
-
-      
     );
-
-    this.posts.forEach(post => {
-      post.mostrarComentarios = false;
-    });
 
   }
 
@@ -87,7 +87,7 @@ export class HomeComponent {
       return;
     }
 
-    this.http.post('http://localhost:8090/red-social/api/posts', this.newPost).subscribe(
+    this.http.post('http://localhost:8080/red-social/api/posts', this.newPost).subscribe(
       () => {
         // Limpiar el formulario
         this.newPost.contenido = '';
@@ -122,12 +122,21 @@ export class HomeComponent {
       console.log('like al post', post.id);
       this.obtenerPosts();
     });
-    
+
   }
 
   abrirComentarios(post: any): void {
     post.mostrarComentarios = !post.mostrarComentarios;
-    // Abrir modal o redirigir
+    this.http.get<any>(`http://localhost:8080/red-social/api/comentarios/post/${post.id}`).subscribe(
+      data => {
+          post.comentarios = data;
+          post.comentarios.forEach((comentario: any) => {
+            comentario.autor = comentario.autor.nombre || 'Desconocido'; // Manejo de autor desconocido
+            comentario.texto = comentario.contenido; 
+          });
+      },
+      error => console.error('Error al obtener posts', error)
+    );
     console.log('Abrir comentarios para el post', post.id);
   }
   abrirModal(url: string, dialog: HTMLDialogElement) {
@@ -136,17 +145,33 @@ export class HomeComponent {
   }
 
   agregarComentario(post: any) {
-      if (!post.nuevoComentario?.trim()) return;
+    if (!post.nuevoComentario?.trim()) return;
 
-        const nuevo = {
-          autor: 'Tú', // Puedes cambiarlo por el usuario logueado
-          texto: post.nuevoComentario.trim()
-        };
+    const comentarioDTO = {
+      contenido: post.nuevoComentario.trim(),
+      postId: post.id,
+      autorId: this.currentUserId
+    };
 
-        post.comentarios = post.comentarios || [];
-        post.comentarios.push(nuevo);
-        post.nuevoComentario = '';
-        post.cantidadComentarios = post.comentarios.length;
+    this.http.post(
+      'http://localhost:8080/red-social/api/comentarios',
+      comentarioDTO,
+      { headers: { 'Content-Type': 'application/json' } }
+    ).subscribe(() => {
+      console.log('Comentario agregado correctamente');
+      this.obtenerPosts();
+    });
+
+    // Agregar comentario en el frontend temporalmente (optimismo)
+    const nuevo = {
+      autor: 'Tú',
+      texto: post.nuevoComentario.trim()
+    };
+
+    post.comentarios = post.comentarios || [];
+    post.comentarios.push(nuevo);
+    post.nuevoComentario = '';
+    post.cantidadComentarios = post.comentarios.length;
   }
 
 }

@@ -20,9 +20,9 @@ export class ListaAmigosComponent {
   constructor(private amistadService: AmistadService, private authService:AuthService) { }
 
   ngOnInit(): void {
+    this.usuarioActualId = this.authService.getCurrentUserId() || 0;
     this.cargarAmigos();
     this.cargarSolicitudesPendientes();
-     this.usuarioActualId = this.authService.getCurrentUserId() || 0;
   }
 
   cargarAmigos(): void {
@@ -94,14 +94,14 @@ export class ListaAmigosComponent {
   }
 
   getNombreAmigo(amistad: Amistad): string {
-    return amistad.solicitante.id === this.usuarioActualId 
-      ? amistad.receptor.nombre 
-      : amistad.solicitante.nombre;
+    return amistad.usuarioSolicitante.id === this.usuarioActualId 
+      ? amistad.usuarioSolicitante.nombre 
+      : amistad.usuarioSolicitante.nombre;
   }
 
   getEmailAmigo(amistad: Amistad): string {
-    return amistad.solicitante.id === this.usuarioActualId 
-      ? amistad.receptor.email 
-      : amistad.solicitante.email;
+    return amistad.usuarioSolicitante.id === this.usuarioActualId 
+      ? amistad.usuarioSolicitante.email 
+      : amistad.usuarioSolicitante.email;
   }
 }

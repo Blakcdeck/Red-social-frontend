@@ -54,6 +54,13 @@
     color: #6c757d;
     font-size: 0.9rem;
   }
+.logo {
+    width: 50px;
+    height: 50px;
+
+    object-fit: cover;
+    margin-right: 10px;
+  }
 
   .userLog {
     color: #343a40;
@@ -61,6 +68,7 @@
     background: rgba(110, 142, 251, 0.15);
     padding: 5px 10px;
     border-radius: 20px;
+    object-fit: contain;
     font-size: 0.9rem;
   }
 

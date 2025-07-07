@@ -20,7 +20,7 @@ interface DecodedToken {
 
 export class AuthService {
 
-  private baseUrl = 'http://localhost:8090/red-social/api/auth';
+  private baseUrl = 'http://localhost:8080/red-social/api/auth';
   private loggedIn = new BehaviorSubject<boolean>(false); // Inicializa en false
   private nombreUsuario: string | undefined;
 
@@ -73,7 +73,7 @@ export class AuthService {
     return this.loggedIn.asObservable();
   }
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   getCurrentUserId(): number | null {
