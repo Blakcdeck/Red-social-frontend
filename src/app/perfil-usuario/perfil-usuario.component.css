@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    list-style: none;
+}
+
+.home-wrapper {
+    padding: 110px 16px 40px; /* 70px navbar + 40px espacio extra */
+    background: linear-gradient(135deg, #ff4e8b, #6a5af9);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+}
+
+.feed-container {
+    width: 100%;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 32px 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.perfil-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    padding: 20px;
+  }
+
+  .perfil-card {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .perfil-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  }
+
+  .perfil-card h2 {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    padding: 20px;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .perfil-info {
+    padding: 25px;
+  }
+
+  .perfil-info p {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #495057;
+    line-height: 1.6;
+    border-bottom: 1px solid #f1f1f1;
+    padding-bottom: 12px;
+  }
+
+  .perfil-info p:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .perfil-info strong {
+    color: #343a40;
+    font-weight: 600;
+    min-width: 100px;
+    display: inline-block;
+  }
+
+  @media (max-width: 600px) {
+    .perfil-card {
+      border-radius: 0;
+    }
+    
+    .perfil-wrapper {
+      padding: 0;
+      align-items: flex-start;
+    }
+  }

@@ -21,11 +21,12 @@
 }
 
 .home-wrapper {
-    padding: 40px 16px;
+    padding: 110px 16px 40px; /* 70px navbar + 40px espacio extra */
     background: linear-gradient(135deg, #ff4e8b, #6a5af9);
     min-height: 100vh;
     display: flex;
     justify-content: center;
+    margin-top: 0;
 }
 
 .feed-container {
@@ -439,4 +440,136 @@
     .image-dialog img {
         height: 300px;
     }
+}
+
+.comentarios-container {
+  margin-top: 2rem;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 1.5rem;
+}
+
+
+.comentarios-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.comentario {
+  display: flex;
+  gap: 1rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.comentario-avatar {
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.comentario-contenido {
+  flex: 1;
+}
+
+.comentario-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.comentario-autor {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.comentario-fecha {
+  font-size: 0.8rem;
+  color: #95a5a6;
+}
+
+.comentario-texto {
+  margin: 0;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+.nuevo-comentario {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f0f0f0;
+  align-items: flex-start;
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.nuevo-comentario-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.comentario-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  resize: none;
+  font-family: inherit;
+  transition: border-color 0.3s;
+
+  &:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+
+  &::placeholder {
+    color: #bdc3c7;
+  }
+}
+
+.comentario-boton {
+  align-self: flex-end;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -28,7 +28,7 @@ export class HomeComponent {
   newPost = {
     contenido: '',
     imagenUrl: '',
-    autorId: 1
+    autorId: 19
   };
 
   constructor(private http: HttpClient) { }
@@ -62,10 +62,18 @@ export class HomeComponent {
   }
 
   obtenerPosts() {
-    this.http.get<any>(`http://localhost:8080/red-social/api/posts/feed/${this.newPost.autorId}`).subscribe(
+    //this.http.get<any>(`http://localhost:8090/red-social/api/posts/feed/${this.newPost.autorId}`).subscribe(
+    this.http.get<any>(`http://localhost:8090/red-social/api/posts/feed/19`).subscribe(
       data => this.posts = data.content,
       error => console.error('Error al obtener posts', error)
+
+      
     );
+
+    this.posts.forEach(post => {
+      post.mostrarComentarios = false;
+    });
+
   }
 
   publicarPost() {
@@ -74,7 +82,7 @@ export class HomeComponent {
       return;
     }
 
-    this.http.post('http://localhost:8080/red-social/api/posts', this.newPost).subscribe(
+    this.http.post('http://localhost:8090/red-social/api/posts', this.newPost).subscribe(
       () => {
         // Limpiar el formulario
         this.newPost.contenido = '';
@@ -105,7 +113,7 @@ export class HomeComponent {
     }
   }
   darLike(post: any): void {
-    this.http.post(`http://localhost:8080/red-social/api/likes/post/${post.id}/usuario/1`, null).subscribe(() => {
+    this.http.post(`http://localhost:8090/red-social/api/likes/post/${post.id}/usuario/19`, null).subscribe(() => {
       console.log('like al post', post.id);
       this.obtenerPosts();
     });
@@ -113,6 +121,7 @@ export class HomeComponent {
   }
 
   abrirComentarios(post: any): void {
+    post.mostrarComentarios = !post.mostrarComentarios;
     // Abrir modal o redirigir
     console.log('Abrir comentarios para el post', post.id);
   }
@@ -120,4 +129,19 @@ export class HomeComponent {
     this.imagenSeleccionada = url;
     dialog.showModal();
   }
+
+  agregarComentario(post: any) {
+      if (!post.nuevoComentario?.trim()) return;
+
+        const nuevo = {
+          autor: 'Tú', // Puedes cambiarlo por el usuario logueado
+          texto: post.nuevoComentario.trim()
+        };
+
+        post.comentarios = post.comentarios || [];
+        post.comentarios.push(nuevo);
+        post.nuevoComentario = '';
+        post.cantidadComentarios = post.comentarios.length;
+  }
+
 }

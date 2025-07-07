@@ -28,29 +28,48 @@ export class LoginComponent {
     password: ''
   };
 
+  nombreUsuario: any;
   constructor(private authService: AuthService,private router:Router) {}
 
   onLogin() {
     this.authService.login(this.loginData).subscribe({
       next: (response) => {
-
         console.log('Login successful:', response);
+        alert('Inicio exitoso');
+        sessionStorage.setItem('nombreUsuario', this.loginData.username);
+        sessionStorage.setItem('userId', '19');
         this.router.navigate(['/home']);
       },
       error: (err) => {
         console.error('Login failed:', err);
+        const mensaje = err.error?.message || 'Error desconocido';
+        const detalles = err.error?.details || '';
+        
+        if (detalles === 'usuario o contraseña incorrectos'){
+          alert(`Credenciales incorrectas`);
+        }else  {
+          alert(`Ocurrió un problema, intente más tarde`);
+          console.log('Error: ' , mensaje, 'Detalle: ', detalles);
+        }
+        
+        
+
       }
     });
   }
 
   onRegister() {
-    this.authService.register(this.registerData).subscribe({
-      next: (response) => {
-        console.log('Registration successful:', response);
-      },
-      error: (err) => {
-        console.error('Registration failed:', err);
-      }
-    });
+      this.authService.register(this.registerData).subscribe({
+          next: (response) => {
+          alert('Registro exitoso!');
+          this.router.navigate(['/home']);
+          console.log('Respuesta:', response); 
+          },
+          error: (err) => {
+            console.error('Error en registro:', err);
+          }
+      });
   }
+
+
 }

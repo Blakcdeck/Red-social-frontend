@@ -1,0 +1,12 @@
+<nav class="navbar">
+  <div class="nav-left">
+  <img src="https://imgur.com/a/3wcJSYm" alt="Logo" class="logo" />
+    <a (click)="OpenHome()">Inicio</a>
+    <a (click)="Openperfil()">Perfil</a>
+  </div>
+  <div class="nav-right">
+    <span class="user">Usuario:</span>
+    <span class="userLog">{{nombreUsuario}}</span>
+    <a href="#" (click)="logout()">Cerrar sesión</a>
+  </div>
+</nav>
