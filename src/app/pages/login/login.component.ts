@@ -22,8 +22,8 @@ export class LoginComponent {
 
   registerData = {
     username: '',
-    name: '',
-    lastname: '',
+    nombre: '',
+    apellido: '',
     email: '',
     password: ''
   };
