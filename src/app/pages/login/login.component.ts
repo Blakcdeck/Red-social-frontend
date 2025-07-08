@@ -62,7 +62,7 @@ export class LoginComponent {
       this.authService.register(this.registerData).subscribe({
           next: (response) => {
           alert('Registro exitoso!');
-          this.router.navigate(['/home']);
+          this.isRegisterActive = false;
           console.log('Respuesta:', response); 
           },
           error: (err) => {
